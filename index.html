@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+ <link rel="icon" href="brain.ico" type="image/x-icon">
+<title>BF</title>
+<style>
+  :root{
+    --t: rgba(0,0,0,0.45);
+    --b: rgba(255,255,255,0.06);
+    --a: #f09292;
+    --c: #e9f0ef;
+    --m: rgba(233,240,239,0.85);
+    --bl: 3px;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;width:100%;overflow:hidden}
+  body{background:#000;color:var(--c);-webkit-font-smoothing:antialiased}
+
+  .vwrap{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .vwrap video{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(1) contrast(1.02) saturate(1.03)}
+
+  .tint{position:fixed;inset:0;background:var(--t);z-index:1;pointer-events:none}
+
+  .overlay{position:fixed;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:0;
+    backdrop-filter: blur(var(--bl)) saturate(1.02);-webkit-backdrop-filter: blur(var(--bl));
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+  }
+
+  .box{
+    width: min(450px,92%);background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(255,255,255,0.01));
+    border:1px solid var(--b);border-radius:12px;padding:28px;color:var(--c);box-shadow:0 12px 40px rgba(0,0,0,0.6);
+    position:relative;
+  }
+
+  h1{font-size:clamp(1.6rem,3.6vw,2.2rem);margin-bottom:8px}
+  .tag{margin-bottom:14px;color:var(--m);font-size:1rem}
+
+  .gap{height:12px}
+
+  .txt{margin-bottom:16px;color:var(--m);font-size:0.98rem}
+  .txt p{margin-bottom:6px}
+
+  .list{margin:16px 0 18px;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .list a{color:var(--a);text-decoration:none;padding:10px 12px;border-radius:10px;display:inline-block;
+    background:linear-gradient(90deg, rgba(126,231,135,0.04), transparent);font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,0.45)}
+  .list a:hover{transform:translateY(-3px);transition:transform .12s}
+
+  .foot{margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.03);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:rgba(233,240,239,0.75)}
+  .snark{font-weight:500;color:var(--m)}
+  .copy{font-size:0.9rem;color:rgba(233,240,239,0.6)}
+
+  .btn{
+    position:absolute;top:12px;right:12px;z-index:4;background:rgba(0,0,0,0.35);color:var(--c);
+    border-radius:10px;padding:8px 10px;border:1px solid rgba(255,255,255,0.04);cursor:pointer;font-weight:600;
+    display:inline-flex;align-items:center;gap:8px;backdrop-filter: blur(2px);
+  }
+  .icon{width:14px;height:14px;display:inline-block;opacity:0.95}
+
+  @media (max-width:520px){.box{padding:18px;border-radius:10px}.btn{top:8px;right:8px;padding:7px 9px}}
+</style>
+</head>
+<body>
+  <div class="vwrap" aria-hidden="true">
+    <video id="vid" autoplay muted loop playsinline>
+      <source src="https://d.uguu.se/KenFFkUH.webm" type="video/webm">
+    </video>
+  </div>
+
+  <div class="tint" aria-hidden="true"></div>
+
+  <main class="overlay" role="main" aria-labelledby="t">
+    <section class="box" aria-label="content">
+      <button id="b" class="btn" title="Unmute video">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+        </svg>
+        <span id="bl">Unmute</span>
+      </button>
+
+      <header>
+        <h1 id="t">🧠F☁️ck</h1>
+        <p class="tag">gets everyone atleast once</p>
+      </header>
+
+      <div class="gap" aria-hidden="true"></div>
+
+      <div class="txt">
+        <p>Hardware(simulated) based brainfuck interpreter.</p>
+      </div>
+
+      <ul class="list" aria-label="links">
+        <li><a href="https://github.com/Qvme/bfcd/" target="_blank" rel="noopener">Github Repo</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Video</a></li>
+        <li><a href="https://www.youtube.com/watch?v=QDia3e12czc" target="_blank" rel="noopener">Don't touch this link</a></li>
+      </ul>
+
+      <footer class="foot">
+        <div class="snark">All source code and software used are licensed under GPL V3.0</div>
+        <div class="copy">🄯 <span id="y"></span> </div>
+      </footer>
+    </section>
+  </main>
+
+<script>
+  const v = document.getElementById('vid');
+  const btn = document.getElementById('b');
+  const lbl = document.getElementById('bl');
+
+  btn.addEventListener('click', () => {
+    v.muted = !v.muted;
+    lbl.textContent = v.muted ? 'Unmute' : 'Mute';
+    btn.title = v.muted ? 'Unmute video' : 'Mute video';
+  });
+
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
