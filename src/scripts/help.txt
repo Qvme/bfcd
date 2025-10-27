@@ -1,0 +1,3 @@
+this folder contains python scripts to generate code for simulation.
+eg.., 
+1) printname.py takes string as input to print it in bf simulation (uses no loops,only dec incr stdout)
